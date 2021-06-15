@@ -1,5 +1,5 @@
 const jokesUrl = "https://api.chucknorris.io/jokes/random";
-const inputField = () => document.getElementById('input');
+const inputField = document.getElementById('input');
 const actionButton = document.getElementById('action');
 //Overlay references //
 const overlay = document.querySelector('.overlay');
@@ -13,14 +13,14 @@ const validateEmail = (email) => {
     return pattern.test(email);
 }
 const handleInvalidEmail = () => {
-    inputField().value = '';
-    inputField().classList.add('invalid-email');
-    inputField().placeholder = 'Email address invalid';
+    inputField.value = '';
+    inputField.classList.add('invalid-email');
+    inputField.placeholder = 'Email address invalid';
 }
 const clearField = () => {
-    inputField().value = '';
-    inputField().classList.remove('invalid-email');
-    inputField().placeholder = 'Your work email';
+    inputField.value = '';
+    inputField.classList.remove('invalid-email');
+    inputField.placeholder = 'Your work email';
 
 }
 const getJoke = async () => {
@@ -35,7 +35,7 @@ const getJoke = async () => {
     }
 }
 const handleAction = async () => {
-    const email = inputField().value;
+    const email = inputField.value;
     if (!validateEmail(email)) return handleInvalidEmail();
     clearField();
     try {
@@ -55,6 +55,11 @@ const handleNext = async () => {
     const anotherJoke = await getJoke();
     modalContent.innerText = anotherJoke.value;
 }
-actionButton.addEventListener('click', handleAction)
+actionButton.addEventListener('click', handleAction);
+inputField.addEventListener('keydown', (ev) => {
+    if(ev.key === 'Enter') {
+        handleAction();
+    }
+}); 
 gotItButton.addEventListener('click', handleGotIt);
 nextButton.addEventListener('click', handleNext);
